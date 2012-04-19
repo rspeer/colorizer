@@ -29,6 +29,11 @@ def rgb_to_lab(rgb):
     labcolor = rgbcolor.convert_to('lab')
     return (labcolor.lab_l, labcolor.lab_a, labcolor.lab_b)
 
+def rgb_to_hsv(rgb):
+    rgbcolor = RGBColor(*rgb)
+    hsvcolor = rgbcolor.convert_to('hsv')
+    return (hsvcolor.hsv_l, hsvcolor.hsv_a, hsvcolor.hsv_b)
+
 def lab_to_rgb(lab):
     labcolor = LabColor(*lab)
     rgbcolor = labcolor.convert_to('rgb')

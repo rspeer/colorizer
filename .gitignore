@@ -1,0 +1,5 @@
+*.egg-info
+*.pyc
+*~
+colorizer/data
+colorizer/pickledata
