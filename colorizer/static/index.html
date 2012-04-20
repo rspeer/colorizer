@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<title>Colorizer</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+<script src="libs/coffee-script.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/coffeescript" src="prettycolors.coffee"></script>
+
+<link rel="stylesheet/css" type="text/css" href="bootstrap/bootstrap.css">
+
+<style>
+body { background-color: #ccc; }
+textarea { padding: 0.5em; font-size: 10pt; }
+</style>
+</head>
+
+<body>
+
+<textarea class="input" id="textarea" cols="40" rows="4">
+</textarea>
+<canvas width="1024" height="768" id="thecanvas"></canvas>
+
+<script type="text/coffeescript">
+$ ->
+  this.colors = new PrettyColors()
+
+$('#textarea').keyup ->
+  text = $('#textarea').text()
+  lastChar = text.substring(text.length-1)
+  if lastChar == " " or lastChar == "\n"
+  	words = a.substring(0, text.length-1).split(' ')
+    endWords = words[-5...].join(' ')
+    this.colors.sendText(endWords)
+
+
+</script>
+</body>
+</html>

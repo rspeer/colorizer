@@ -50,7 +50,6 @@ def elect_stv(candidates, ballots, nwinners):
             running.remove(loser)
 
     assert len(winners) <= nwinners
-
     return winners
 
 def weighted_color_vote(candidates, ballots, nwinners):
@@ -84,42 +83,19 @@ def weighted_color_vote(candidates, ballots, nwinners):
 
     return winners
 
-def elect_samples(colors, n=8):
-    if len(colors) > 1000:
-        samples = random.sample(colors, n*5)
-        colors = random.sample(colors, 1000)
-    elif len(colors) > n*5:
-        samples = random.sample(colors, n*5)
-        assert len(samples) == n*5
-    else:
-        samples = colors
-    votes = []
-
-    for color in colors:
-        ratings = []
-        for candidate in samples:
-            ratings.append((euclidean_distance(color, candidate),
-                tuple(candidate)))
-        ratings.sort()
-        vote = [r[1] for r in ratings]
-        votes.append(vote)
-
-    winners = elect_stv(samples, votes, n)
-    return [lab_to_rgb(x) for x in winners]
-
 def weighted_elect_samples(colorvotes, n=8):
-    if len(colorvotes) > 1000:
+    if len(colorvotes) > 100:
         samples = random.sample(colorvotes, n*5)
-        colorvotes = random.sample(colorvotes, 1000)
+        colorvotes = random.sample(colorvotes, 100)
     elif len(colorvotes) > n*5:
         samples = random.sample(colorvotes, n*5)
-        assert len(samples) == n*5
     else:
         samples = colorvotes
     
-    candidates = [c for c, w in samples]
+    candidates = [lab_to_rgb(c) for c, w in samples]
     votes = []
-    for color, weight in colorvotes:
+    for labcolor, weight in colorvotes:
+        color = np.array(lab_to_rgb(labcolor))
         ratings = []
         for candidate in candidates:
             ratings.append((euclidean_distance(color, candidate),
@@ -129,7 +105,7 @@ def weighted_elect_samples(colorvotes, n=8):
         votes.append((vote, weight))
 
     winners = weighted_color_vote(candidates, votes, n)
-    return [lab_to_rgb(x) for x in winners]
+    return winners
 
 def make_html():
     out = open('color_samples.html', 'w')
