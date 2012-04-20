@@ -41,6 +41,13 @@ class IncrementalColorizer(object):
         active_concept = None
         active_concept_norm = None
         tokens = ENGLISH.tokenize(text).split()
+        if ENGLISH.is_stopword(tokens[-1]):
+            return {
+                'colors': self.colors,
+                'active': tokens[-1],
+                'activeColors': [],
+                'weight': 0
+            }
         for pos in xrange(len(tokens)):
             if not ENGLISH.is_stopword(tokens[pos]):
                 suffix = ENGLISH.untokenize(' '.join(tokens[pos:]))
@@ -48,7 +55,7 @@ class IncrementalColorizer(object):
                     active_concept = suffix
                     active_concept_norm = ENGLISH.normalize(suffix)
                     break
-
+        active_votes = []
         if active_concept:
             active_votes = self.get_color_votes(active_concept_norm)
             self.votes = [(b, w*0.9) for (b, w) in self.votes[-1000:]]
@@ -60,7 +67,8 @@ class IncrementalColorizer(object):
         return {
             'colors': self.colors,
             'active': active_concept,
-            'active_colors': self.active_colors
+            'activeColors': self.active_colors,
+            'weight': len(active_votes)
         }
         
     def add_concepts(self, concepts, old_weight):
