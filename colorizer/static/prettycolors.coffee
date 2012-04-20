@@ -50,7 +50,7 @@ class RenderedWord
 
 class PrettyColors
   initialize: () ->
-    @canvas = $('#textarea')[0]
+    @canvas = $('#thecanvas')[0]
     @canvas.width = window.innerWidth
     @canvas.height = window.innerHeight
     @ctx = @canvas.getContext "2d"
@@ -60,16 +60,18 @@ class PrettyColors
     @words = []
 
   sendText: (text) ->
+    console.log('sent')
     escapedText = encodeURI(text.replace(/[\/ ]/g, '+'))
     $.ajax
       url: "/input/#{@uid}/#{escapedText}"
       dataType: 'json'
-      success: @handleResponse
+      success: @handleResponse.bind(this)
 
   cleanWords: ->
     @words = (w for w in @words when w.alpha > 0.1 and w.y > 0)
   
   handleResponse: (obj) ->
+    console.log('got response')
     size = 10 + obj.weight/100
     newWord = new RenderedWord(
     	obj.active,
@@ -85,17 +87,16 @@ class PrettyColors
       @xPos -= @canvas.width
 
 $ ->
-  this.colors = new PrettyColors()
+  window.colors = new PrettyColors()
+  window.colors.initialize()
   console.log("initialized")
 
 $('#textarea').keyup ->
-  console.log("keyup")
-  #text = $('#textarea').text()
-  text = 'e'
+  text = $('#textarea').val()
   lastChar = text.substring(text.length-1)
   if lastChar == " "
-    words = a.substring(0, text.length-1).split(' ')
+    words = text.substring(0, text.length-1).split(' ')
     endWords = words[-5...].join(' ')
-    this.colors.sendText(endWords)
+    window.colors.sendText(endWords)
 
 this.PrettyColors = PrettyColors
