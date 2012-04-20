@@ -84,4 +84,18 @@ class PrettyColors
       @xPos += size*6
       @xPos -= @canvas.width
 
+$ ->
+  this.colors = new PrettyColors()
+  console.log("initialized")
+
+$('#textarea').keyup ->
+  console.log("keyup")
+  #text = $('#textarea').text()
+  text = 'e'
+  lastChar = text.substring(text.length-1)
+  if lastChar == " "
+    words = a.substring(0, text.length-1).split(' ')
+    endWords = words[-5...].join(' ')
+    this.colors.sendText(endWords)
+
 this.PrettyColors = PrettyColors
