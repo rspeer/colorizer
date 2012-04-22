@@ -52,6 +52,14 @@ def elect_stv(candidates, ballots, nwinners):
     assert len(winners) <= nwinners
     return winners
 
+def complement_bonus(winners, candidate):
+    L1, a1, b1 = candidate
+    weight = 1.0
+    for L2, a2, b2 in winners:
+        dotprod = (a1*a2 + b1*b2)/10000
+        weight *= abs(dotprod)
+    return weight
+
 def weighted_color_vote(candidates, ballots, nwinners):
     winners = []
     running = set(candidates)
@@ -84,18 +92,18 @@ def weighted_color_vote(candidates, ballots, nwinners):
     return winners
 
 def weighted_elect_samples(colorvotes, n=8):
-    if len(colorvotes) > 100:
+    if len(colorvotes) > 500:
         samples = random.sample(colorvotes, n*5)
-        colorvotes = random.sample(colorvotes, 100)
+        colorvotes = random.sample(colorvotes, 500)
     elif len(colorvotes) > n*5:
         samples = random.sample(colorvotes, n*5)
     else:
         samples = colorvotes
     
-    candidates = [lab_to_rgb(c) for c, w in samples]
+    candidates = [c for c, w in samples]
     votes = []
     for labcolor, weight in colorvotes:
-        color = np.array(lab_to_rgb(labcolor))
+        color = np.array(labcolor)
         ratings = []
         for candidate in candidates:
             ratings.append((euclidean_distance(color, candidate),
@@ -106,6 +114,7 @@ def weighted_elect_samples(colorvotes, n=8):
 
     winners = weighted_color_vote(candidates, votes, n)
     return winners
+
 
 def make_html():
     out = open('color_samples.html', 'w')

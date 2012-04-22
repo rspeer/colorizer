@@ -7,6 +7,9 @@ from colorizer.colorvote import weighted_elect_samples
 ENGLISH = simplenlp.get('en')
 ASSOC = get_commonsense_assoc('en', 100)
 
+def output_colors(labcolors):
+    return [lab_to_rgb(c) for c in sorted(labcolors)]
+
 class IncrementalColorizer(object):
     def __init__(self, ncolors):
         self.ncolors = ncolors
@@ -29,7 +32,7 @@ class IncrementalColorizer(object):
             morevotes = [(color, weight) for color in self.colordata[concept]]
             votes.extend(morevotes)
         similar = ASSOC.terms_similar_to_vector(
-            ASSOC.vector_from_terms([(concept, 1)]))[:10]
+            ASSOC.vector_from_terms([(concept, 1)]))[:3]
         for sim, wsim in similar:
             if sim in self.colordata:
                 morevotes = [(color, wsim*weight*0.1) for color in
@@ -38,36 +41,28 @@ class IncrementalColorizer(object):
         return votes
 
     def add_text(self, text):
-        active_concept = None
-        active_concept_norm = None
-        tokens = ENGLISH.tokenize(text).split()
-        if ENGLISH.is_stopword(tokens[-1]):
+        active_concept = text
+        active_concept_norm = ENGLISH.normalize(text)
+        if ENGLISH.is_stopword(text):
             return {
-                'colors': self.colors,
-                'active': tokens[-1],
+                'colors': output_colors(self.colors),
+                'active': text,
                 'activeColors': [],
                 'weight': 0
             }
-        for pos in xrange(len(tokens)):
-            if not ENGLISH.is_stopword(tokens[pos]):
-                suffix = ENGLISH.untokenize(' '.join(tokens[pos:]))
-                if ENGLISH.normalize(suffix) in self.colordata:
-                    active_concept = suffix
-                    active_concept_norm = ENGLISH.normalize(suffix)
-                    break
         active_votes = []
         if active_concept:
             active_votes = self.get_color_votes(active_concept_norm)
-            self.votes = [(b, w*0.9) for (b, w) in self.votes[-1000:]]
+            self.votes = [(b, w*0.9) for (b, w) in self.votes[-400:]]
             self.votes.extend(active_votes)
             self.active_colors = weighted_elect_samples(active_votes,
-                                                        self.ncolors//2)
+                                                        self.ncolors//2+1)
         
             self.colors = weighted_elect_samples(self.votes, self.ncolors)
         return {
-            'colors': self.colors,
+            'colors': output_colors(self.colors),
             'active': active_concept,
-            'activeColors': self.active_colors,
+            'activeColors': output_colors(self.active_colors),
             'weight': len(active_votes)
         }
         
