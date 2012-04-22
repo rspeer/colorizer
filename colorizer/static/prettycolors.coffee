@@ -10,6 +10,47 @@ requestAnimFrame = \
   window.msRequestAnimationFrame || (callback) ->
     window.setTimeout(callback, 1000/60)
 
+class Circle
+  constructor: (alpha) ->
+    dist = Math.random()
+    theta = Math.random() * TAU
+    @x = dist * Math.cos(theta)
+    @y = dist * Math.sin(theta)
+
+    @size = 100 + Math.random() * 400
+    @thickness = Math.random() * @size
+    @incolor = [120, 120, 120]
+    @outcolor = [200, 200, 200]
+    @alpha = alpha
+
+    @vx = 0
+    @vy = 0
+
+  setColors: (incolor, outcolor) ->
+    @incolor = incolor
+    @outcolor = outcolor
+
+  tick: () ->
+    @y += @vy
+    @x += @vx
+
+    @vx -= @x/100
+    @vx += (Math.random() - .5)/10
+    @vy -= @y/100
+    @vy += (Math.random() - .5)/10
+
+  draw: (ctx) ->
+    ctx.fillStyle = makeRGBA(@incolor, @alpha)
+    ctx.strokeStyle = makeRGBA(@outcolor, @alpha)
+    ctx.lineWidth = @thickness
+
+    screenX = ctx.canvas.width * (@x+0.5)
+    screenY = ctx.canvas.height * (@y+0.5)
+    @screenX = screenX
+    @screenY = screenY
+    #console.log(screenX, screenY, @size)
+    ctx.arc(screenX, screenY, @size)
+
 class RenderedWord
   constructor: (word, x, y, size, colors) ->
     @word = word
@@ -20,7 +61,7 @@ class RenderedWord
     @radius = 2
     @alpha = 1
     @vx = 0
-    @vy = 0
+    @vy = 1
     @ay = Math.random()/200 + 0.01
     @rotationRate = (Math.random() - .5)/40
     @size = size
@@ -30,10 +71,10 @@ class RenderedWord
   tick: () ->
     @y -= @vy
     @radius += @vy
-    @vy += @ay
 
     @x += @vx
     @vx += (Math.random() - .5)/10 
+    @vy += (Math.random() - .5)/10 
 
     @angle += @rotationRate
     if @angle > TAU
@@ -45,6 +86,7 @@ class RenderedWord
 
   draw: (ctx) ->
     ctx.font = "italic #{@size*1.5}px 'Gentium Basic'"
+    ctx.lineWidth = 0
     if @colors.length > 0
       nOthers = Math.min(@colors.length - 1, 3)
       ctx.font = "bold #{@altSize}px 'PT Sans'"
@@ -72,6 +114,9 @@ class PrettyColors
 
     @xPos = 0
     @words = []
+    @circles = []
+    for i in [0...16]
+      @circles.push(new Circle(0.8))
     this.waitForTick()
 
   sendText: (text) ->
@@ -122,11 +167,14 @@ class PrettyColors
       @xPos -= @canvas.width
 
   makeBackground: () ->
+    @ctx.fillStyle = makeRGBA(@colors[0], 1)
+    #@ctx.fillRect(0, 0, @canvas.width, @canvas.height)
     N = @colors.length
-    for i in [0...@colors.length]
-      w = @canvas.width
-      @ctx.fillStyle = makeRGBA(@colors[i], 1)
-      @ctx.fillRect(i*w/N, 0, w/N, @canvas.height)
+    for ci in [0...@circles.length]
+      i = ci % N
+      j = (ci+1) % N
+      @circles[ci].setColors(@colors[i], @colors[j])
+      @circles[ci].draw(@ctx)
 
 $ ->
   window.colors = new PrettyColors()
