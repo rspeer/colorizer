@@ -35,8 +35,10 @@ class Circle
     @x += @vx
 
     @vx -= @x/20000
+    @vx *= .999
     @vx += (Math.random() - .5)/4000
     @vy -= @y/20000
+    @vx *= .999
     @vy += (Math.random() - .5)/4000
 
   draw: (ctx) ->
@@ -119,7 +121,7 @@ class PrettyColors
     @words = []
     @circles = []
     for i in [0...8]
-      @circles.push(new Circle(0.04))
+      @circles.push(new Circle(0.02))
     this.waitForTick()
 
   sendText: (text) ->
