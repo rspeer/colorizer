@@ -17,10 +17,10 @@ class Circle
     @x = dist * Math.cos(theta)
     @y = dist * Math.sin(theta)
 
-    @size = 100 + Math.random() * 400
+    @size = 100 + Math.random() * 200
     @thickness = Math.random() * @size
-    @incolor = [120, 120, 120]
-    @outcolor = [200, 200, 200]
+    @incolor = [120, 120, 140]
+    @outcolor = [200, 200, 220]
     @alpha = alpha
 
     @vx = 0
@@ -34,10 +34,10 @@ class Circle
     @y += @vy
     @x += @vx
 
-    @vx -= @x/100
-    @vx += (Math.random() - .5)/10
-    @vy -= @y/100
-    @vy += (Math.random() - .5)/10
+    @vx -= @x/20000
+    @vx += (Math.random() - .5)/4000
+    @vy -= @y/20000
+    @vy += (Math.random() - .5)/4000
 
   draw: (ctx) ->
     ctx.fillStyle = makeRGBA(@incolor, @alpha)
@@ -49,7 +49,10 @@ class Circle
     @screenX = screenX
     @screenY = screenY
     #console.log(screenX, screenY, @size)
-    ctx.arc(screenX, screenY, @size)
+    ctx.beginPath()
+    ctx.arc(screenX, screenY, @size, 0, TAU)
+    ctx.fill()
+    ctx.stroke()
 
 class RenderedWord
   constructor: (word, x, y, size, colors) ->
@@ -61,28 +64,28 @@ class RenderedWord
     @radius = 2
     @alpha = 1
     @vx = 0
-    @vy = 1
+    @vy = 0
     @ay = Math.random()/200 + 0.01
     @rotationRate = (Math.random() - .5)/40
     @size = size
     @altSize = size
-    @fadeRate = 0.995
+    @fadeRate = 0.99
 
   tick: () ->
     @y -= @vy
     @radius += @vy
 
     @x += @vx
-    @vx += (Math.random() - .5)/10 
-    @vy += (Math.random() - .5)/10 
+    @vx += (Math.random() - .5)/5 
+    @vy += (Math.random() - .5)/5 
 
     @angle += @rotationRate
     if @angle > TAU
       @angle -= TAU
 
     @alpha *= @fadeRate
-    @size /= @fadeRate
-    @altSize /= @fadeRate*@fadeRate
+    @size /= Math.sqrt(@fadeRate)
+    @altSize /= @fadeRate
 
   draw: (ctx) ->
     ctx.font = "italic #{@size*1.5}px 'Gentium Basic'"
@@ -115,8 +118,8 @@ class PrettyColors
     @xPos = 0
     @words = []
     @circles = []
-    for i in [0...16]
-      @circles.push(new Circle(0.8))
+    for i in [0...8]
+      @circles.push(new Circle(0.04))
     this.waitForTick()
 
   sendText: (text) ->
@@ -139,7 +142,7 @@ class PrettyColors
     this.waitForTick()
 
   cleanWords: =>
-    @words = (w for w in @words when w.alpha > 0.2 and w.y > 0)
+    @words = (w for w in @words when w.alpha > 0.01 and w.y > 0 and w.y < @ctx.canvas.height)
   
   handleResponse: (obj) =>
     console.log('got response')
@@ -167,14 +170,15 @@ class PrettyColors
       @xPos -= @canvas.width
 
   makeBackground: () ->
-    @ctx.fillStyle = makeRGBA(@colors[0], 1)
-    #@ctx.fillRect(0, 0, @canvas.width, @canvas.height)
+    @ctx.fillStyle = makeRGBA(@colors[0], 0.01)
+    @ctx.fillRect(0, 0, @canvas.width, @canvas.height)
     N = @colors.length
     for ci in [0...@circles.length]
       i = ci % N
       j = (ci+1) % N
       @circles[ci].setColors(@colors[i], @colors[j])
       @circles[ci].draw(@ctx)
+      @circles[ci].tick()
 
 $ ->
   window.colors = new PrettyColors()
