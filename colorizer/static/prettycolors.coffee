@@ -44,10 +44,10 @@ class RenderedWord
     @altSize /= @fadeRate*@fadeRate
 
   draw: (ctx) ->
-    ctx.font = "#{@size}px Helvetica"
+    ctx.font = "italic #{@size*1.5}px 'Gentium Basic'"
     if @colors.length > 0
       nOthers = Math.min(@colors.length - 1, 3)
-      ctx.font = "bold #{@altSize}px Helvetica"
+      ctx.font = "bold #{@altSize}px 'PT Sans'"
       if nOthers
         for i in [1...nOthers+1]
           ctx.fillStyle = makeRGBA(@colors[i], @alpha*@alpha)
@@ -56,7 +56,7 @@ class RenderedWord
     if @colors.length == 0
       ctx.fillStyle = makeRGBA([255, 255, 255], @alpha)
     else
-      ctx.font = "bold #{@size}px Helvetica"
+      ctx.font = "bold #{@size}px 'PT Sans'"
       ctx.fillStyle = makeRGBA(@colors[0], @alpha)
     ctx.fillText(@word, @x, @y)    
 
