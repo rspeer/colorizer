@@ -4,6 +4,7 @@ from conceptnet.models import Assertion, Language
 from csc_utils.persist import PickleDict
 from colormath.color_objects import LuvColor, LabColor, RGBColor
 import numpy as np
+import cPickle as pickle
 import logging
 import random
 import math
@@ -86,53 +87,11 @@ def xkcd_data():
             print colorname.decode('utf-8').encode('ascii', 'replace')
     return xkcd
 
-@pd.lazy(version=2)
 def make_lab_color_data():
     """
     Returns a dictionary mapping color names to lists of Lab color values.
     """
-    objects_and_colors = defaultdict(list)
-    xkcd = xkcd_data()  # formerly used training data with held-out tests
-
-    # Nodebox
-    print "Constructing from NodeBox"
-    for color in colorlist:
-        data_stream = resource_stream('colorizer', 'data/nodebox/' + color + '.txt')
-        sets = [x.strip('\n') for x in data_stream.readlines()]
-        clist = ','.join(sets)
-        words = clist.split(',')            
-        for word in words:
-            word = word.strip()
-            if word == '': continue
-            print color, word
-            for i in xrange(100):
-                objects_and_colors[en.nl.normalize(word)].append(rgb_to_lab(rgb[color]))
-
-    # ConceptNet
-    print "Constructing from ConceptNet"
-    for color in colorlist:
-        assertions = Assertion.objects.filter(
-            concept2__text=color,
-            relation__name='HasProperty',
-            language__id='en',
-            score__gt=0,
-            frequency__value__gt=0,
-        )
-        for theassertion in assertions:
-            object = theassertion.concept1.text
-            print color, object
-            for i in xrange(100):
-                objects_and_colors[object].append(rgb_to_lab(rgb[color]))
-
-    # xkcd
-    print "Constructing from xkcd"
-    for text in xkcd:
-        concepts = en.nl.extract_concepts(text, check_conceptnet=True)
-        for concept in concepts:
-            objects_and_colors[concept].extend([rgb_to_lab(x) for x in xkcd[text]])
-            print concept
-
-    return objects_and_colors
+    return pickle.load(open('pickledata/make_lab_color_data'))
 
 def nearest_color(colormat, rgb):
     lab = rgb_to_lab(rgb)
