@@ -15,6 +15,8 @@ FOOTER = """
 </table>
 </body></html>
 """
+
+
 def euclidean_distance(vec1, vec2):
     if isinstance(vec1, tuple):
         vec1 = np.array(vec1)
@@ -54,10 +56,15 @@ def elect_stv(candidates, ballots, nwinners):
 
 def complement_bonus(winners, candidate):
     L1, a1, b1 = candidate
+    R, G, B = lab_to_rgb(candidate)
+    avg = (R+G+B)/3
     weight = 1.0
     for L2, a2, b2 in winners:
         dotprod = (a1*a2 + b1*b2)/10000
-        weight *= abs(dotprod)
+        if dotprod < 0:
+            dotprod *= -2
+        weight *= dotprod
+    weight /= (0.5 + abs(avg - G))
     return weight
 
 def weighted_color_vote(candidates, ballots, nwinners):
@@ -66,7 +73,6 @@ def weighted_color_vote(candidates, ballots, nwinners):
     total = sum(b[1] for b in ballots)
     quota = int(total / (nwinners+1.0)) + 1
 
-    # TODO: reward complementary colors
     while len(winners) < nwinners:
         if len(running) == 0:
             break
@@ -76,9 +82,12 @@ def weighted_color_vote(candidates, ballots, nwinners):
                 if vote in running:
                     totals[vote] += weight
                     break
+        for candidate in totals:
+            totals[candidate] *= (0.5 + complement_bonus(winners, candidate)/2)
         total_votes = totals.items()
         total_votes.sort(key=lambda x: -x[1])
         elected_one = False
+
         for candidate, votes in total_votes:
             if votes >= quota:
                 winners.append(candidate)
@@ -92,9 +101,9 @@ def weighted_color_vote(candidates, ballots, nwinners):
     return winners
 
 def weighted_elect_samples(colorvotes, n=8):
-    if len(colorvotes) > 1000:
+    if len(colorvotes) > 100:
         samples = random.sample(colorvotes, n*10)
-        colorvotes = random.sample(colorvotes, 500)
+        colorvotes = random.sample(colorvotes, 100)
     elif len(colorvotes) > n*10:
         samples = random.sample(colorvotes, n*10)
     else:

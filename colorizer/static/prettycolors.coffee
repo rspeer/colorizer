@@ -172,7 +172,8 @@ class PrettyColors
       @xPos -= @canvas.width
 
   makeBackground: () ->
-    @ctx.fillStyle = makeRGBA(@colors[@colors.length-1], 0.04)
+    midColor = Math.floor(@colors.length/2)
+    @ctx.fillStyle = makeRGBA(@colors[midColor], 0.04)
     @ctx.fillRect(0, 0, @canvas.width, @canvas.height)
     N = @colors.length
     for ci in [0...@circles.length]
@@ -187,14 +188,18 @@ $ ->
   console.log("initialized")
 
 $('#textarea').keyup ->
+  triggerText()
+
+triggerText = () ->
   text = $('#textarea').val()
-  if text != colors.lastText
-    colors.lastText = text
-    lastChar = text.substring(text.length-1)
-    if lastChar == " " or lastChar == "\n"
-      words = text.substring(0, text.length-1).split(' ')
-      endWords = words[words.length-1]
-      if endWords?
-        window.colors.sendText(endWords)
+  text = text.replace(/\n/g, ' ')
+  pieces = text.split(" ")
+  if pieces.length > 1
+    word = pieces[0]
+    $('#textarea').val(pieces[1...].join(' '))
+    if word
+      window.colors.sendText(word)
+  if pieces.length > 2
+    triggerText()
 
 this.PrettyColors = PrettyColors
