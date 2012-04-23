@@ -52,7 +52,7 @@ class Circle
     @screenY = screenY
     #console.log(screenX, screenY, @size)
     ctx.beginPath()
-    ctx.arc(screenX, screenY, @size, 0, TAU)
+    ctx.arc(screenX, screenY, @size/2, 0, TAU)
     ctx.fill()
     ctx.stroke()
 
@@ -63,7 +63,7 @@ class RenderedWord
     @y = y
     @colors = colors
     @angle = Math.random() * TAU
-    @radius = 2
+    @radius = 1
     @alpha = 0.8
     @vx = 0
     @vy = 0
@@ -78,8 +78,8 @@ class RenderedWord
     @radius += @vy
 
     @x += @vx
-    @vx += (Math.random() - .5)/5 
-    @vy += (Math.random() - .5)/5 
+    @vx += (Math.random() - .5)/15
+    @vy += (Math.random() - .5)/15
 
     @angle += @rotationRate
     if @angle > TAU
@@ -110,8 +110,8 @@ class RenderedWord
 class PrettyColors
   constructor: () ->
     @canvas = $('#thecanvas')[0]
-    @canvas.width = window.innerWidth
-    @canvas.height = window.innerHeight
+    # @canvas.width = window.innerWidth
+    # @canvas.height = window.innerHeight
     @ctx = @canvas.getContext "2d"
     @uid = ''+Math.floor(Math.random() * 10000)
     @colors = [[200, 200, 200]]
@@ -148,11 +148,10 @@ class PrettyColors
   
   handleResponse: (obj) =>
     console.log('got response')
-    size = 12 + Math.sqrt(obj.weight)
     if obj.weight == 0
-      size = 12
+      size = 8
     else
-      size = 20 + Math.sqrt(obj.weight)*2
+      size = 10 + Math.sqrt(obj.weight)
     if obj.weight < 25
       obj.activeColors = obj.activeColors[0...1]
     newWord = new RenderedWord(
