@@ -42,7 +42,7 @@ class IncrementalColorizer(object):
 
     def add_text(self, text):
         active_concept = text
-        active_concept_norm = ENGLISH.normalize(text)
+        active_concept_norm = ENGLISH.normalize(text).strip()
         if ENGLISH.is_stopword(text):
             return {
                 'colors': output_colors(self.colors),

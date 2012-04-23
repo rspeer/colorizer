@@ -37,9 +37,9 @@ class Circle
     @vx -= @x/20000
     @vx *= .999
     @vx += (Math.random() - .5)/4000
-    @vy -= @y/20000
-    @vx *= .999
-    @vy += (Math.random() - .5)/4000
+    @vy -= @y/15000
+    @vy *= .999
+    @vy += (Math.random() - .5)/3000
 
   draw: (ctx) ->
     ctx.fillStyle = makeRGBA(@incolor, @alpha)
@@ -64,7 +64,7 @@ class RenderedWord
     @colors = colors
     @angle = Math.random() * TAU
     @radius = 2
-    @alpha = 1
+    @alpha = 0.8
     @vx = 0
     @vy = 0
     @ay = Math.random()/200 + 0.01
@@ -120,8 +120,8 @@ class PrettyColors
     @xPos = 0
     @words = []
     @circles = []
-    for i in [0...8]
-      @circles.push(new Circle(0.02))
+    for i in [0...16]
+      @circles.push(new Circle(0.01))
     this.waitForTick()
 
   sendText: (text) ->
@@ -172,7 +172,7 @@ class PrettyColors
       @xPos -= @canvas.width
 
   makeBackground: () ->
-    @ctx.fillStyle = makeRGBA(@colors[0], 0.01)
+    @ctx.fillStyle = makeRGBA(@colors[@colors.length-1], 0.04)
     @ctx.fillRect(0, 0, @canvas.width, @canvas.height)
     N = @colors.length
     for ci in [0...@circles.length]

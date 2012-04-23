@@ -92,11 +92,11 @@ def weighted_color_vote(candidates, ballots, nwinners):
     return winners
 
 def weighted_elect_samples(colorvotes, n=8):
-    if len(colorvotes) > 500:
-        samples = random.sample(colorvotes, n*5)
+    if len(colorvotes) > 1000:
+        samples = random.sample(colorvotes, n*10)
         colorvotes = random.sample(colorvotes, 500)
-    elif len(colorvotes) > n*5:
-        samples = random.sample(colorvotes, n*5)
+    elif len(colorvotes) > n*10:
+        samples = random.sample(colorvotes, n*10)
     else:
         samples = colorvotes
     
