@@ -123,6 +123,7 @@ class PrettyColors
     for i in [0...16]
       @circles.push(new Circle(0.01))
     this.waitForTick()
+    @timeout = null
 
   sendText: (text) ->
     console.log("sent #{text}")
@@ -184,25 +185,42 @@ class PrettyColors
       @circles[ci].draw(@ctx)
       @circles[ci].tick()
 
+  triggerText: () =>
+    if @timeout
+      window.clearTimeout(@timeout)
+    @timeout = window.setTimeout(this.triggerTextAuto, 500)
+
+    text = $('#textarea').val()
+    text = text.replace(/\n/g, ' ')
+    pieces = text.split(" ")
+    if (pieces.length > 1) or (timeout and pieces.length > 0)
+      word = pieces[0]
+      $('#textarea').val(pieces[1...].join(' '))
+      if word
+        window.colors.sendText(word)
+    if pieces.length > 2
+      triggerText()
+
+  triggerTextAuto: () =>
+    if @timeout
+      window.clearTimeout(@timeout)
+    @timeout = window.setTimeout(this.triggerTextAuto, 500)
+
+    text = $('#textarea').val()
+    text = text.replace(/\n/g, ' ')
+    pieces = text.split(" ")
+    if (pieces.length > 0)
+      word = pieces[0]
+      $('#textarea').val(pieces[1...].join(' '))
+      if word
+        window.colors.sendText(word)
+
 $ ->
   window.colors = new PrettyColors()
   console.log("initialized")
 
 $('#textarea').keyup ->
-  triggerText()
+  window.colors.triggerText(timeout=false)
 
-
-triggerText = () ->
-  console.log('go')
-  text = $('#textarea').val()
-  text = text.replace(/\n/g, ' ')
-  pieces = text.split(" ")
-  if pieces.length > 1
-    word = pieces[0]
-    $('#textarea').val(pieces[1...].join(' '))
-    if word
-      window.colors.sendText(word)
-  if pieces.length > 2
-    triggerText()
 
 this.PrettyColors = PrettyColors

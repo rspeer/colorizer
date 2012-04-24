@@ -1,5 +1,5 @@
 (function() {
-  var Circle, PrettyColors, RenderedWord, TAU, makeRGBA, requestAnimFrame, triggerText;
+  var Circle, PrettyColors, RenderedWord, TAU, makeRGBA, requestAnimFrame;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   TAU = Math.PI * 2;
   makeRGBA = function(triple, alpha) {
@@ -112,6 +112,8 @@
   })();
   PrettyColors = (function() {
     function PrettyColors() {
+      this.triggerTextAuto = __bind(this.triggerTextAuto, this);
+      this.triggerText = __bind(this.triggerText, this);
       this.handleResponse = __bind(this.handleResponse, this);
       this.cleanWords = __bind(this.cleanWords, this);
       this.tick = __bind(this.tick, this);
@@ -129,6 +131,7 @@
         this.circles.push(new Circle(0.01));
       }
       this.waitForTick();
+      this.timeout = null;
     }
     PrettyColors.prototype.sendText = function(text) {
       var escapedText;
@@ -209,6 +212,43 @@
       }
       return _results;
     };
+    PrettyColors.prototype.triggerText = function() {
+      var pieces, text, word;
+      if (this.timeout) {
+        window.clearTimeout(this.timeout);
+      }
+      this.timeout = window.setTimeout(this.triggerTextAuto, 500);
+      text = $('#textarea').val();
+      text = text.replace(/\n/g, ' ');
+      pieces = text.split(" ");
+      if ((pieces.length > 1) || (timeout && pieces.length > 0)) {
+        word = pieces[0];
+        $('#textarea').val(pieces.slice(1).join(' '));
+        if (word) {
+          window.colors.sendText(word);
+        }
+      }
+      if (pieces.length > 2) {
+        return triggerText();
+      }
+    };
+    PrettyColors.prototype.triggerTextAuto = function() {
+      var pieces, text, word;
+      if (this.timeout) {
+        window.clearTimeout(this.timeout);
+      }
+      this.timeout = window.setTimeout(this.triggerTextAuto, 500);
+      text = $('#textarea').val();
+      text = text.replace(/\n/g, ' ');
+      pieces = text.split(" ");
+      if (pieces.length > 0) {
+        word = pieces[0];
+        $('#textarea').val(pieces.slice(1).join(' '));
+        if (word) {
+          return window.colors.sendText(word);
+        }
+      }
+    };
     return PrettyColors;
   })();
   $(function() {
@@ -216,24 +256,8 @@
     return console.log("initialized");
   });
   $('#textarea').keyup(function() {
-    return triggerText();
+    var timeout;
+    return window.colors.triggerText(timeout = false);
   });
-  triggerText = function() {
-    var pieces, text, word;
-    console.log('go');
-    text = $('#textarea').val();
-    text = text.replace(/\n/g, ' ');
-    pieces = text.split(" ");
-    if (pieces.length > 1) {
-      word = pieces[0];
-      $('#textarea').val(pieces.slice(1).join(' '));
-      if (word) {
-        window.colors.sendText(word);
-      }
-    }
-    if (pieces.length > 2) {
-      return triggerText();
-    }
-  };
   this.PrettyColors = PrettyColors;
 }).call(this);
