@@ -193,7 +193,7 @@ class PrettyColors
     text = $('#textarea').val()
     text = text.replace(/\n/g, ' ')
     pieces = text.split(" ")
-    if (pieces.length > 1) or (timeout and pieces.length > 0)
+    if (pieces.length > 1)
       word = pieces[0]
       $('#textarea').val(pieces[1...].join(' '))
       if word

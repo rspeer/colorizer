@@ -221,7 +221,7 @@
       text = $('#textarea').val();
       text = text.replace(/\n/g, ' ');
       pieces = text.split(" ");
-      if ((pieces.length > 1) || (timeout && pieces.length > 0)) {
+      if (pieces.length > 1) {
         word = pieces[0];
         $('#textarea').val(pieces.slice(1).join(' '));
         if (word) {
