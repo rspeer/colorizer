@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<title>Colorizer</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/coffeescript" src="prettycolors.coffee"></script>
+<script type="text/coffeescript" src="playdemo.coffee"></script>
+<script type="text/javascript" src="coffee-script.js" encoding="utf-8"></script>
+<script type="text/javascript" src="fluffy-clouds.js" encoding="utf-8"></script>
+
+<link rel="stylesheet/css" type="text/css" href="bootstrap/bootstrap.css">
+<link href='http://fonts.googleapis.com/css?family=Gentium+Basic:400italic|PT+Sans:700,400' rel='stylesheet' type='text/css'>
+
+<style>
+body { background-color: #ccc; width: 100%; height: 100%; margin: 0px; overflow: hidden; }
+textarea { padding: 0.5em; font-size: 10pt; }
+#thecanvas { position: absolute; z-index: -1; top: 0; left: 0; width: 100%; height: 100%; }
+</style>
+</head>
+
+<body>
+
+<audio src="clouds.mp3" preload='auto' id="theaudio"></audio>
+<!-- <button class="btn" id="play">Play</button> -->
+<canvas width="600" height="300" id="thecanvas"></canvas>
+</body>
+</html>

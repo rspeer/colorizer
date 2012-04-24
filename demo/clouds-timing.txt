@@ -14,10 +14,10 @@
 21.0 and  the   *skies   always  had  *little   *fluffy     *clouds    in them
 24.5 and
 26.0 they  were
-27.0 *long  and
-27.8 *clear
-28.5 |there  were  lots  of   *stars  at   *night
-31.0 |and
+26.5 *long  and
+27.3 *clear
+28.0 |there  were  lots  of   *stars     at   *night
+31.5 |and
 32.3 when  it  would   *rain   it  would  all  turn
 34.3 it  they  were    *beautiful    the  most   *beautiful    *skies
 36.9 as  a  *matter of   *fact
@@ -28,15 +28,16 @@
 44.9 would  catch   the   *colors
 46.2 everywhere
 47.7 |that's
-48.1 *neat  because I used  to  *look at them  all the *time  when I was  *little
+48.1 *neat  because I used  to  look at them  all the *time  when I was  *little
 50.5 |you  don't    *see that
+52.0 |...
 81.9 |*Layering   *different  *sounds   on top  of  each  other
-86.0 |*Layering   *different  *sounds   on top  of  each  other
+86.4 |*Layering   *different  *sounds   on top  of  each  other
 91.1 |*little   *fluffy    *clouds
 93.4 |*little   *fluffy    *clouds
 100.1 |*little   *fluffy    *clouds
 102.5 |*little   *fluffy    *clouds
-108.6 |what  were  the
+109.1 |what  were  the
 109.7 *skies   like    when  you  were  *young
 112.5 |they  ran   on  *forever
 113.7 they  when I
@@ -46,7 +47,7 @@
 121.0 they  were
 122.0 *long  and
 122.8 *clear
-123.5 |there  were  lots  of   *stars  at   *night
+123.5 |there  were  lots  of   *stars       at   *night
 126.5 |and
 127.3 when  it  would   *rain   it  would  all  turn
 129.3 it  they  were    *beautiful    the  most   *beautiful    *skies
@@ -85,7 +86,8 @@
 192.7 |that's
 193.4 *neat  because I used  to  *look at them  all the *time  when I was  *little
 196.0 |You  don't    *see that
-197.8 |You  might  still  *see them  in the  *desert
+197.8 |You  might  still  *see that  in the  *desert
+197.8 |*(desert)
 228.0 |the  most  *beautiful    *skies
 229.4 as  a  *matter of   *fact
 235.4 |*purple  and    *red
@@ -93,4 +95,4 @@
 243.6 and  *yellow  and      on  *fire
 246.5 |*red  and  *yellow  and       on  *fire
 249.0 |the  *clouds   would  catch  the  *colors
-252.0 *(airplane)
+

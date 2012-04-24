@@ -1,5 +1,7 @@
 *.egg-info
 *.pyc
+*.swp
+*.sublime-project
 *~
 colorizer/data
 colorizer/pickledata

@@ -44,10 +44,10 @@ class IncrementalColorizer(object):
                 votes.extend(morevotes)
         return votes
 
-    def add_text(self, text):
+    def add_text(self, text, force_stopword=False):
         active_concept = text
         active_concept_norm = ENGLISH.normalize(text).strip()
-        if ENGLISH.is_stopword(text):
+        if force_stopword or ENGLISH.is_stopword(text):
             return {
                 'colors': output_colors(self.colors),
                 'active': text,
