@@ -13,7 +13,6 @@
     DemoSequence.prototype.play = function() {
       this.listPos = 0;
       this.running = true;
-      this.audio.seek(0);
       this.audio.play();
       return this.step();
     };

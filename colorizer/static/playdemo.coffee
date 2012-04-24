@@ -8,7 +8,6 @@ class DemoSequence
   play: =>
     @listPos = 0
     @running = true
-    @audio.seek(0)
     @audio.play()
     this.step()
 
