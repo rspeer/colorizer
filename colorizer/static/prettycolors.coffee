@@ -222,5 +222,4 @@ $ ->
 $('#textarea').keyup ->
   window.colors.triggerText(timeout=false)
 
-
 this.PrettyColors = PrettyColors

@@ -1,4 +1,5 @@
 import simplenlp
+from metanl import english
 import math, random
 from luminoso3.background_space import get_commonsense_assoc
 from colorizer.color_data import make_lab_color_data, lab_to_rgb, rgb_to_hsv
@@ -7,11 +8,19 @@ from colorizer.colorvote import weighted_elect_samples
 ENGLISH = simplenlp.get('en')
 ASSOC = get_commonsense_assoc('en', 100)
 
+
 COLORDATA = {}
 origdata = make_lab_color_data()
+
+def importance_factor(colorname):
+    imp = 18000 / math.sqrt(english.word_frequency(colorname.split()[0], 1000000))
+    if imp > 10: return 10
+    if imp < 0.1: return 0.1
+    return imp
+
 for key, values in origdata.items():
     subset_values = random.sample(values,
-      min(len(values), int(math.ceil(4*math.sqrt(len(values))))))
+      min(len(values), int(math.ceil(importance_factor(key)*math.sqrt(len(values))))))
     COLORDATA[key] = subset_values
 
 
