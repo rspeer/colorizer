@@ -1,5 +1,5 @@
 (function() {
-  var DemoSequence, seq;
+  var DemoSequence;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   DemoSequence = (function() {
     function DemoSequence(events) {
@@ -12,19 +12,19 @@
     }
     DemoSequence.prototype.play = function() {
       this.listPos = 0;
-      this.startTime = new Date().getTime();
       this.running = true;
+      this.audio.seek(0);
       this.audio.play();
       return this.step();
     };
     DemoSequence.prototype.stop = function() {
-      return this.audio.stop();
+      return this.audio.pause();
     };
     DemoSequence.prototype.step = function() {
       var diff, event;
       if (this.running) {
         window.setTimeout(this.step, 50);
-        diff = (new Date().getTime() - this.startTime) / 1000;
+        diff = this.audio.currentTime;
         event = this.eventList[this.listPos];
         if (diff > event.time) {
           window.colors.handleResponse(event);
@@ -35,10 +35,11 @@
     return DemoSequence;
   })();
   $(function() {
+    var seq;
     seq = new DemoSequence(events);
     if (!seq.running) {
-      return seq.play();
+      seq.play();
     }
-    window.seq = seq;
+    return window.seq = seq;
   });
 }).call(this);
