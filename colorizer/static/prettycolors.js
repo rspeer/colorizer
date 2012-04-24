@@ -220,6 +220,7 @@
   });
   triggerText = function() {
     var pieces, text, word;
+    console.log('go');
     text = $('#textarea').val();
     text = text.replace(/\n/g, ' ');
     pieces = text.split(" ");

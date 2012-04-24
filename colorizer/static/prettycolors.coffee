@@ -191,7 +191,9 @@ $ ->
 $('#textarea').keyup ->
   triggerText()
 
+
 triggerText = () ->
+  console.log('go')
   text = $('#textarea').val()
   text = text.replace(/\n/g, ' ')
   pieces = text.split(" ")
