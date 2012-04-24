@@ -217,7 +217,7 @@ class PrettyColors
 $ ->
   window.colors = new PrettyColors()
   console.log("initialized")
-  window.callPeriodically(window.colors.triggerTextAuto, 500)
+  window.setInterval(window.colors.triggerTextAuto, 500)
 
 $('#textarea').keydown ->
   window.colors.triggerText()

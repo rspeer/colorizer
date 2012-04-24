@@ -252,7 +252,7 @@
   $(function() {
     window.colors = new PrettyColors();
     console.log("initialized");
-    return window.callPeriodically(window.colors.triggerTextAuto, 500);
+    return window.setInterval(window.colors.triggerTextAuto, 500);
   });
   $('#textarea').keydown(function() {
     return window.colors.triggerText();

@@ -13,10 +13,8 @@ COLORDATA = {}
 origdata = make_lab_color_data()
 
 def importance_factor(colorname):
-    imp = 18000 / math.sqrt(english.word_frequency(colorname.split()[0], 1000000))
-    if imp > 10: return 10
-    if imp < 0.1: return 0.1
-    return imp
+    imp = 10000 / math.sqrt(english.word_frequency(colorname.split()[0], 1000000))
+    return int(imp)
 
 for key, values in origdata.items():
     subset_values = random.sample(values,
