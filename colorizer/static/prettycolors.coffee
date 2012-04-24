@@ -66,7 +66,7 @@ class RenderedWord
     @radius = 1
     @alpha = 0.8
     @vx = 0
-    @vy = 0
+    @vy = 0.1
     @ay = Math.random()/200 + 0.01
     @rotationRate = (Math.random() - .5)/40
     @size = size
@@ -148,6 +148,8 @@ class PrettyColors
   
   handleResponse: (obj) =>
     console.log('got response')
+    if obj.newline
+      @xPos = 20
     if obj.weight == 0
       size = 8
     else

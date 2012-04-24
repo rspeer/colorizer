@@ -11,7 +11,7 @@ COLORDATA = {}
 origdata = make_lab_color_data()
 for key, values in origdata.items():
     subset_values = random.sample(values,
-      int(math.ceil(math.sqrt(len(values)))))
+      min(len(values), 4*int(math.ceil(math.sqrt(len(values))))))
     COLORDATA[key] = subset_values
 
 

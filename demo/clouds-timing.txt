@@ -88,6 +88,7 @@
 196.0 |You  don't    *see that
 197.8 |You  might  still  *see that  in the  *desert
 197.8 |*(desert)
+198.8 |*(desert)
 228.0 |the  most  *beautiful    *skies
 229.4 as  a  *matter of   *fact
 235.4 |*purple  and    *red
@@ -95,4 +96,3 @@
 243.6 and  *yellow  and      on  *fire
 246.5 |*red  and  *yellow  and       on  *fire
 249.0 |the  *clouds   would  catch  the  *colors
-

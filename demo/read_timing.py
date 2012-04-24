@@ -8,6 +8,7 @@ def read_timing(filename):
     file = open(filename)
     for line in file:
         line = line.strip()
+        if not line: continue
         parts = line.split(' ')
         time = float(parts[0])
         for word in parts[1:]:
