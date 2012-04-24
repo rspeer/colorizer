@@ -24,10 +24,8 @@ class DemoSequence
         window.colors.handleResponse(event)
         @listPos += 1
 
-seq = new DemoSequence(events)
-
 $ ->
+  seq = new DemoSequence(events)
   if not seq.running
     seq.play()
-
-window.seq = seq 
+  window.seq = seq 
