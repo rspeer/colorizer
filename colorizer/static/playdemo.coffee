@@ -7,18 +7,18 @@ class DemoSequence
 
   play: =>
     @listPos = 0
-    @startTime = new Date().getTime()
     @running = true
+    @audio.seek(0)
     @audio.play()
     this.step()
 
   stop: =>
-    @audio.stop()
+    @audio.pause()
 
   step: =>
     if @running
       window.setTimeout(this.step, 50)
-      diff = (new Date().getTime() - @startTime) / 1000
+      diff = @audio.currentTime
       event = @eventList[@listPos]
       if diff > event.time
         window.colors.handleResponse(event)
