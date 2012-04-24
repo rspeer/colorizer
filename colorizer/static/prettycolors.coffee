@@ -116,6 +116,7 @@ class PrettyColors
     @uid = ''+Math.floor(Math.random() * 10000)
     @colors = [[200, 200, 200]]
     @lastText = ''
+    @manualTime = 0
 
     @xPos = 0
     @words = []
@@ -186,9 +187,7 @@ class PrettyColors
       @circles[ci].tick()
 
   triggerText: () =>
-    if @timeout
-      window.clearTimeout(@timeout)
-    @timeout = window.setTimeout(this.triggerTextAuto, 500)
+    @manualTime = new Date().getTime()
 
     text = $('#textarea').val()
     text = text.replace(/\n/g, ' ')
@@ -202,24 +201,27 @@ class PrettyColors
       triggerText()
 
   triggerTextAuto: () =>
-    if @timeout
-      window.clearTimeout(@timeout)
-    @timeout = window.setTimeout(this.triggerTextAuto, 500)
+    time = new Date().getTime()
+    if time - @manualTime > 400
+      @manualTime = new Date().getTime()
 
-    text = $('#textarea').val()
-    text = text.replace(/\n/g, ' ')
-    pieces = text.split(" ")
-    if (pieces.length > 0)
-      word = pieces[0]
-      $('#textarea').val(pieces[1...].join(' '))
-      if word
-        window.colors.sendText(word)
+      text = $('#textarea').val()
+      text = text.replace(/\n/g, ' ')
+      pieces = text.split(" ")
+      if (pieces.length > 0)
+        word = pieces[0]
+        $('#textarea').val(pieces[1...].join(' '))
+        if word
+          window.colors.sendText(word)
 
 $ ->
   window.colors = new PrettyColors()
   console.log("initialized")
+  window.callPeriodically(window.colors.triggerTextAuto, 500)
 
+$('#textarea').keydown ->
+  window.colors.triggerText()
 $('#textarea').keyup ->
-  window.colors.triggerText(timeout=false)
+  window.colors.triggerText()
 
 this.PrettyColors = PrettyColors

@@ -124,6 +124,7 @@
       this.uid = '' + Math.floor(Math.random() * 10000);
       this.colors = [[200, 200, 200]];
       this.lastText = '';
+      this.manualTime = 0;
       this.xPos = 0;
       this.words = [];
       this.circles = [];
@@ -214,10 +215,7 @@
     };
     PrettyColors.prototype.triggerText = function() {
       var pieces, text, word;
-      if (this.timeout) {
-        window.clearTimeout(this.timeout);
-      }
-      this.timeout = window.setTimeout(this.triggerTextAuto, 500);
+      this.manualTime = new Date().getTime();
       text = $('#textarea').val();
       text = text.replace(/\n/g, ' ');
       pieces = text.split(" ");
@@ -233,19 +231,19 @@
       }
     };
     PrettyColors.prototype.triggerTextAuto = function() {
-      var pieces, text, word;
-      if (this.timeout) {
-        window.clearTimeout(this.timeout);
-      }
-      this.timeout = window.setTimeout(this.triggerTextAuto, 500);
-      text = $('#textarea').val();
-      text = text.replace(/\n/g, ' ');
-      pieces = text.split(" ");
-      if (pieces.length > 0) {
-        word = pieces[0];
-        $('#textarea').val(pieces.slice(1).join(' '));
-        if (word) {
-          return window.colors.sendText(word);
+      var pieces, text, time, word;
+      time = new Date().getTime();
+      if (time - this.manualTime > 400) {
+        this.manualTime = new Date().getTime();
+        text = $('#textarea').val();
+        text = text.replace(/\n/g, ' ');
+        pieces = text.split(" ");
+        if (pieces.length > 0) {
+          word = pieces[0];
+          $('#textarea').val(pieces.slice(1).join(' '));
+          if (word) {
+            return window.colors.sendText(word);
+          }
         }
       }
     };
@@ -253,11 +251,14 @@
   })();
   $(function() {
     window.colors = new PrettyColors();
-    return console.log("initialized");
+    console.log("initialized");
+    return window.callPeriodically(window.colors.triggerTextAuto, 500);
+  });
+  $('#textarea').keydown(function() {
+    return window.colors.triggerText();
   });
   $('#textarea').keyup(function() {
-    var timeout;
-    return window.colors.triggerText(timeout = false);
+    return window.colors.triggerText();
   });
   this.PrettyColors = PrettyColors;
 }).call(this);
