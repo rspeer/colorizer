@@ -11,7 +11,7 @@ COLORDATA = {}
 origdata = make_lab_color_data()
 for key, values in origdata.items():
     subset_values = random.sample(values,
-      min(len(values), int(math.ceil(2*math.sqrt(len(values))))))
+      min(len(values), int(math.ceil(4*math.sqrt(len(values))))))
     COLORDATA[key] = subset_values
 
 
@@ -44,10 +44,10 @@ class IncrementalColorizer(object):
                 votes.extend(morevotes)
         return votes
 
-    def add_text(self, text):
+    def add_text(self, text, force_stopword=False):
         active_concept = text
         active_concept_norm = ENGLISH.normalize(text).strip()
-        if ENGLISH.is_stopword(text):
+        if force_stopword or ENGLISH.is_stopword(text):
             return {
                 'colors': output_colors(self.colors),
                 'active': text,

@@ -1,0 +1,98 @@
+2.0 *(rooster)
+2.5 *(sunrise)
+3.7 Over   the  *past   few   *years   to the
+6.0 traditional    *sounds  of an *English  *summer
+7.6 the  *droning of  *lawn *mowers
+8.7 the   smack     of  *leather   on  *willow
+10.6 |has  been  added
+11.5 a  new   *noise
+13.6 |what  were  the
+14.7 *skies   like    when  you  were  *young
+17.5 |they  ran   on  *forever
+18.7 they  when I
+19.5 |we  lived  in  *Arizona
+21.0 and  the   *skies   always  had  *little   *fluffy     *clouds    in them
+24.5 and
+26.0 they  were
+26.5 *long  and
+27.3 *clear
+28.0 |there  were  lots  of   *stars     at   *night
+31.5 |and
+32.3 when  it  would   *rain   it  would  all  turn
+34.3 it  they  were    *beautiful    the  most   *beautiful    *skies
+36.9 as  a  *matter of   *fact
+39.0 |the  *sunsets    were
+41.2 *purple  and     *red
+42.6 and  *yellow  and      on  *fire
+44.5 |and  the   *clouds
+44.9 would  catch   the   *colors
+46.2 everywhere
+47.7 |that's
+48.1 *neat  because I used  to  look at them  all the *time  when I was  *little
+50.5 |you  don't    *see that
+52.0 |...
+81.9 |*Layering   *different  *sounds   on top  of  each  other
+86.4 |*Layering   *different  *sounds   on top  of  each  other
+91.1 |*little   *fluffy    *clouds
+93.4 |*little   *fluffy    *clouds
+100.1 |*little   *fluffy    *clouds
+102.5 |*little   *fluffy    *clouds
+109.1 |what  were  the
+109.7 *skies   like    when  you  were  *young
+112.5 |they  ran   on  *forever
+113.7 they  when I
+114.5 |we  lived  in  *Arizona
+116.0 and  the   *skies   always  had  *little   *fluffy     *clouds    in  them
+119.5 and
+121.0 they  were
+122.0 *long  and
+122.8 *clear
+123.5 |there  were  lots  of   *stars       at   *night
+126.5 |and
+127.3 when  it  would   *rain   it  would  all  turn
+129.3 it  they  were    *beautiful    the  most   *beautiful    *skies
+131.4 |as  a  *matter of   *fact
+134.0 the  *sunsets    were
+136.2 *purple  and     *red
+137.6 and  *yellow  and      on  *fire
+139.5 |and  the   *clouds
+139.9 would  catch   the   *colors
+141.2 everywhere
+142.7 |that's
+143.1 *neat  because I used  to  *look at them  all the *time  when I was  *little
+145.5 |You  don't    *see that
+145.7 |*little *fluffy    *clouds
+148.0 |*little  *fluffy    *clouds
+155.0 |*little  *fluffy    *clouds
+157.5 |*little  *fluffy    *clouds
+164.4 when I
+165.0 |we  lived  in  *Arizona
+166.5 and  the   *skies   always  had  *little   *fluffy     *clouds    in them
+169.4 and
+170.4 they  were
+171.4 *long  and
+172.2 *clear
+173.2 |there  were  lots  of   *stars  at   *night
+176.7 |and
+177.7 when  it  would   *rain   it  would  all  turn
+179.8 it  they  were    *beautiful    the  most   *beautiful    *skies
+182.0 as  a  *matter of   *fact
+184.3 |the  *sunsets    were
+186.6 *purple  and     *red
+188.0 and  *yellow  and      on  *fire
+190.2 |and  the   *clouds
+191.0 would  catch   the   *colors
+191.8 everywhere
+192.7 |that's
+193.4 *neat  because I used  to  *look at them  all the *time  when I was  *little
+196.0 |You  don't    *see that
+197.8 |You  might  still  *see that  in the  *desert
+197.8 |*(desert)
+198.8 |*(desert)
+228.0 |the  most  *beautiful    *skies
+229.4 as  a  *matter of   *fact
+235.4 |*purple  and    *red
+242.5 |*purple  and    *red
+243.6 and  *yellow  and      on  *fire
+246.5 |*red  and  *yellow  and       on  *fire
+249.0 |the  *clouds   would  catch  the  *colors
