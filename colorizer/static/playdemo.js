@@ -34,11 +34,11 @@
     };
     return DemoSequence;
   })();
-  seq = new DemoSequence(events);
   $(function() {
+    seq = new DemoSequence(events);
     if (!seq.running) {
       return seq.play();
     }
+    window.seq = seq;
   });
-  window.seq = seq;
 }).call(this);
