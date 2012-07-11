@@ -20,10 +20,11 @@
       return this.audio.pause();
     };
     DemoSequence.prototype.step = function() {
-      var diff, event;
+      var diff, event, offset, _ref;
       if (this.running) {
+        offset = (_ref = window.timeOffset) != null ? _ref : 0;
         window.setTimeout(this.step, 50);
-        diff = this.audio.currentTime;
+        diff = this.audio.currentTime + offset;
         event = this.eventList[this.listPos];
         if (diff > event.time) {
           window.colors.handleResponse(event);

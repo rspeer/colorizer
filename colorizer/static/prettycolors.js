@@ -231,11 +231,11 @@
       }
     };
     PrettyColors.prototype.triggerTextAuto = function() {
-      var pieces, text, time, word;
+      var pieces, text, time, word, _ref;
       time = new Date().getTime();
       if (time - this.manualTime > 400) {
         this.manualTime = new Date().getTime();
-        text = $('#textarea').val();
+        text = (_ref = $('#textarea').val()) != null ? _ref : '';
         text = text.replace(/\n/g, ' ');
         pieces = text.split(" ");
         if (pieces.length > 0) {

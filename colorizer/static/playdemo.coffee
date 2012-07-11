@@ -16,8 +16,9 @@ class DemoSequence
 
   step: =>
     if @running
+      offset = window.timeOffset ? 0
       window.setTimeout(this.step, 50)
-      diff = @audio.currentTime
+      diff = @audio.currentTime + window.timeOffset
       event = @eventList[@listPos]
       if diff > event.time
         window.colors.handleResponse(event)

@@ -32,4 +32,4 @@ def read_timing(filename):
     json.dump(responses, outfile, indent=2)
     outfile.close()
 
-read_timing('clouds-timing.txt')
+read_timing('lewis-timing-excerpt.txt')

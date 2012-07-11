@@ -72,7 +72,7 @@ class IncrementalColorizer(object):
                 active_votes = self.get_color_votes(active_concept_norm)
 
             self.votes.sort(key=lambda v: v[1])
-            self.votes = [(b, w*0.9) for (b, w) in self.votes[-400:]]
+            self.votes = [(b, w*0.8) for (b, w) in self.votes[-400:]]
             self.votes.extend(active_votes)
             self.active_colors = weighted_elect_samples(active_votes,
                                                         self.ncolors//2+1)

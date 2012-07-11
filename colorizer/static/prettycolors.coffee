@@ -205,7 +205,7 @@ class PrettyColors
     if time - @manualTime > 400
       @manualTime = new Date().getTime()
 
-      text = $('#textarea').val()
+      text = $('#textarea').val() ? ''
       text = text.replace(/\n/g, ' ')
       pieces = text.split(" ")
       if (pieces.length > 0)
